@@ -37,6 +37,10 @@ cases</p>
 
 DeepSight is an autonomous driving perception and reasoning framework built on top of [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory), with full-pipeline customization for data processing, model training, and inference evaluation in autonomous driving scenarios.
 
+## Baseline completeness
+
+See [the baseline completion audit](docs/BASELINE_COMPLETION.md) before setup. Install the vendored Transformers before the root package; external data, teacher weights and machine-specific paths are still required. Runtime validation has not been performed.
+
 ## Quick Start
 
 ### Environment Setup
@@ -53,8 +57,8 @@ conda create -n deepsight python=3.10 -y && conda activate deepsight
 # torch == 2.6.0
 
 # Install dependencies
-pip install -r requirements.txt
-# pip install -e .
+python -m pip install -e ./src/transformers
+python -m pip install -e .
 ```
 
 ## Overview
@@ -70,7 +74,7 @@ This project extends LLaMA-Factory with the following features:
 
 ```
 deepsight/
-├── configs/                                  # Training configuration files (YAML)
+├── config/                                  # Training configuration files (YAML)
 ├── data/                                     # Dataset processing utilities
 ├── src/                                      # Core source code
 │   ├── tools/                                # Data & evaluation utility scripts
@@ -87,7 +91,7 @@ deepsight/
 ├── bench2drive/                              # Bench2Drive evaluation framework
 │   └── leaderboard/scripts/
 │       └── run_evaluation_qwen.sh            # Closed-loop evaluation script
-├── nebula.sh                                 # Nebula cluster training script
+├── nebula.sh                                 # Compatibility wrapper for scripts/train/train.sh
 └── requirements.txt                          # Training environment dependencies
 ```
 
@@ -142,7 +146,7 @@ Update the OpenAI API key and call the Qwen3VL model to perform annotation.
 bash nebula.sh
 ```
 
-The training entry point is `src/train.py`, with hyperparameters defined in YAML configuration files under the `configs/` directory.
+The training entry point is `src/train.py`, with hyperparameters defined in YAML configuration files under the `config/` directory.
 
 ### Loss Design
 
@@ -327,9 +331,9 @@ Runs the Bench2Drive evaluation leaderboard pipeline with the trained Qwen model
 
 | Component | Description |
 |-----------|-------------|
-| `nebula.sh` | Training job submission script for Nebula cluster |
+| `nebula.sh` | Compatibility wrapper for scripts/train/train.sh |
 | `requirements.txt` | Training environment Python dependencies |
-| `configs/` | YAML configuration files for different training runs |
+| `config/` | YAML configuration files for different training runs |
 | `bench2drive/` | Bench2Drive evaluation framework (separate inference environment) |
 | `src/tools/` | Data processing, visualization, and evaluation utility scripts |
 | `src/transformers/` | Modified transformers (with DINOv3 integration) |

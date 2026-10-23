@@ -1,4 +1,18 @@
 {
+  "bench2drive_bev_target": {
+    "file_name": "bench2drive_bev_target.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "images": "images"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
   "bench2drive_bev_train": {
     "file_name": "/mnt/nas-data-1/wuchangjie.wcj/data/ad_ex2/train_bev-full.jsonl",
     "formatting": "sharegpt",
